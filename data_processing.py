@@ -5,24 +5,26 @@ import mediapipe as mp
 from tqdm import tqdm
 import csv
 import itertools
-
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-mp_hands = mp.solutions.hands
+from time import sleep
 
 TRAIN_PATH = "./data/train"
 signs = os.listdir(TRAIN_PATH)
 
 IMAGE_FILES = []
 
-for sign in signs[1:6]:
+for sign in tqdm(signs[1:], total=len(signs[1:]), desc="Loading data"):
     PATH = f"{TRAIN_PATH}/{sign}"
     images = os.listdir(PATH)
 
     for image in images[:100]:
         IMAGE_FILES.append(f"{PATH}/{image}")
 
-    print(f"Done for {sign}")
+sleep(1)
+os.system("cls")
+
+mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_hands = mp.solutions.hands
 
 def get_landmark_list(width, height, landmarks):
     landmark_points = []
